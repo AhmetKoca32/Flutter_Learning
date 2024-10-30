@@ -74,4 +74,28 @@ void main() {
       print('by');
     }
   }
+
+  List<dynamic> user = [
+    1,
+    'a',
+    true
+  ]; // Tavsiye edimez kontrolü daha çok zordur
+
+  for (var item in user) {
+    print(item);
+  }
+
+  // dynamic listlerin tavsiye edilmemesinin sebebi aşağıdaki kodda dynamic olmayan kod kullanılarak gösterildi
+
+  List<String> userNames = ['ali', 'ahmet', 'veli'];
+  userNames.contains('veli');
+
+  for (var item in userNames) {
+    if (item == 'veli') {
+      print('var');
+    }
+    ;
+  }
+
+  // avantajlarında kısa bir örnek büyük kod blokları yazmak zorunda kalınmadı if else bloğu hiç açılmadı
 }
