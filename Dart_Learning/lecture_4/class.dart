@@ -75,9 +75,31 @@ void main() {
   }
   print('-----------------' * 10);
   int customerMoneyX = 15;
-  User user1 = User('ak', 300, 20, 'Isparta');
+  User user1 = User('ak', 300, age: 20, city: 'Isparta', id: '1234');
+  // User user2 = User('df', 24, null, null);
+  final user3 = User('df', 24,
+      age: 18,
+      id: '123'); // koda süslü parantez eklendikten sonra böyle bir geliştirme geldi yani değişkeni tanımlamdan da nullable olduğunu gösterebiliriz
 
   print(user1.name);
+
+  print(user3.userCode);
+
+  print(user3._id);
+
+  // müsteri son gelen kisinin citysine göre islem yapicak eğer istanbul ise
+
+  if (user3.city == null) {
+    print('kullanici sehir bilgisi girmemis');
+  } else {
+    if (user3.city!.isEmpty) {
+      print('okoko');
+    }
+
+    if (user3.city == 'istanbul') {
+      print('tebrikler kazandiniz');
+    }
+  }
 }
 
 void controlCustomerAge(int value) {
@@ -104,17 +126,44 @@ int? controlMoney(int? money) {
 //parası olmak zorunda y
 //asını vermeyebilir
 //citysini vermeyebilir
+//id degiskenine sadece bu class üzerinden erisilsin
 class User {
   // özellikleri neler
   late final String name;
   late final int money;
-  late final int age;
-  late final String city;
+  late final int? age; // nullable (null olabilir)
+  late final String? city; // nullable (null olabilir)
 
-  User(String name, int money, int age, String city) {
+  late final String userCode;
+
+  late final String _id;
+
+  User(String name, int money, {required String id, int? age, String? city}) {
     this.name = name;
     this.money = money;
     this.age = age;
     this.city = city;
+    _id = id;
+    userCode = (city ?? 'ist') + name;
+  }
+}
+
+// late ne işe yarar ?
+// Dart dilinde late anahtar kelimesi, bir değişkenin geç bir zamanda (programın başında değil, daha sonra)
+// ilk değerini alacağını belirtir. Bu, özellikle final veya const anahtar kelimeleri
+// ile birlikte kullanıldığında yararlıdır çünkü normalde final değişkenler tanımlandıkları anda bir değer almak
+// zorundadır. late, değişkene daha sonra değer atama esnekliği sağlar.
+
+class User2 {
+  // özellikleri neler
+  final String name;
+  final int money;
+  final int? age; // nullable (null olabilir)
+  final String? city; // nullable (null olabilir)
+
+  late final String userCode;
+
+  User2(this.name, this.money, {this.age, this.city}) {
+    userCode = (city ?? 'ist') + name;
   }
 }
