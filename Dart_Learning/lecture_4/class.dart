@@ -1,3 +1,6 @@
+import 'model/user_model.dart';
+import 'model/user_model_2.dart';
+
 void main() {
   // musteri adı var , parası var, yasi var bla bla
 
@@ -79,13 +82,11 @@ void main() {
   // User user2 = User('df', 24, null, null);
   final user3 = User('df', 24,
       age: 18,
-      id: '123'); // koda süslü parantez eklendikten sonra böyle bir geliştirme geldi yani değişkeni tanımlamdan da nullable olduğunu gösterebiliriz
+      id: '12'); // koda süslü parantez eklendikten sonra böyle bir geliştirme geldi yani değişkeni tanımlamdan da nullable olduğunu gösterebiliriz
 
   print(user1.name);
 
   print(user3.userCode);
-
-  print(user3._id);
 
   // müsteri son gelen kisinin citysine göre islem yapicak eğer istanbul ise
 
@@ -100,6 +101,21 @@ void main() {
       print('tebrikler kazandiniz');
     }
   }
+
+  // Müsteri idsi 12 olana indirim yap
+  if (user3.isSpecialUser('12')) {
+    user3.money += 5;
+    print('Para eklendi');
+    user3.isEmptyId;
+  }
+
+  // Eğer User2 classından final bir değişkenin değiştirmesini yapamaya çalışırsa
+  // kod hata verecektir aynı classın içindeyken hata vermez ama crash verir
+  User2 newUser2 = User2('ak', 20);
+  newUser2.money += 10;
+  newUser2.money = 0;
+
+  print(newUser2.toString());
 }
 
 void controlCustomerAge(int value) {
@@ -122,48 +138,10 @@ int? controlMoney(int? money) {
   // }
 }
 
-//adi olmak zorunda
-//parası olmak zorunda y
-//asını vermeyebilir
-//citysini vermeyebilir
-//id degiskenine sadece bu class üzerinden erisilsin
-class User {
-  // özellikleri neler
-  late final String name;
-  late final int money;
-  late final int? age; // nullable (null olabilir)
-  late final String? city; // nullable (null olabilir)
-
-  late final String userCode;
-
-  late final String _id;
-
-  User(String name, int money, {required String id, int? age, String? city}) {
-    this.name = name;
-    this.money = money;
-    this.age = age;
-    this.city = city;
-    _id = id;
-    userCode = (city ?? 'ist') + name;
-  }
-}
-
 // late ne işe yarar ?
 // Dart dilinde late anahtar kelimesi, bir değişkenin geç bir zamanda (programın başında değil, daha sonra)
 // ilk değerini alacağını belirtir. Bu, özellikle final veya const anahtar kelimeleri
 // ile birlikte kullanıldığında yararlıdır çünkü normalde final değişkenler tanımlandıkları anda bir değer almak
 // zorundadır. late, değişkene daha sonra değer atama esnekliği sağlar.
 
-class User2 {
-  // özellikleri neler
-  final String name;
-  final int money;
-  final int? age; // nullable (null olabilir)
-  final String? city; // nullable (null olabilir)
 
-  late final String userCode;
-
-  User2(this.name, this.money, {this.age, this.city}) {
-    userCode = (city ?? 'ist') + name;
-  }
-}
