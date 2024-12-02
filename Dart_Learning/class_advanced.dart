@@ -33,11 +33,23 @@ void main(List<String> args) {
   int money2 = 50;
   print(money1 == money2);
 
-  final moneyBank1 = Bank(50);
-  final moneyBank2 = Bank(50);
+  final moneyBank1 = Bank(50, '12');
+  final moneyBank2 = Bank(50, '12');
   print(moneyBank1 == moneyBank2);
   // Bu ikisinin birinin true birinin false çıkmasının sebebi
   // classlar referance olduğu için normal değer atamadan farklı değer döndürür
+
+  // musteri bank sınıfından iki kisinin sonucunu toplayıp ekrana yazdırsın
+  // print(moneyBank1 + moneyBank2); // Bu kod çalışmadı çünkü tanımlanan operatör istediğimiz gibi tanımlanmadı yani + operatörü tanımlanmadı
+
+  // Bank classında operatör tanımlandıktan sonra
+  print(moneyBank1 + moneyBank2); // Bu kod çalışır çünkü operatör tanımlandı
+
+  // Benim bankama gelen müşterilerimin id si aynı olanları aynı müşteri say
+  print(moneyBank1 == moneyBank2);
+
+  // özelleştirilmiş toString kullanımı
+  print(moneyBank1.toString());
 }
 
 class _User {
@@ -62,6 +74,20 @@ class _User {
 
 class Bank {
   final int money;
+  final String id;
 
-  Bank(this.money);
+  Bank(this.money, this.id);
+
+  int operator +(Bank newBank) {
+    return this.money + newBank.money;
+  }
+
+  @override
+  String toString() {
+    return super.toString() + 'Ahmet';
+  } // Normalde bütün classlarımızın için toString fonksiyonu bulunduğu için sonradan eklenen bi toString fonksiyonu override edilmiş olur ve değişiklik yapılabilir
+
+  bool operator ==(Object object) {
+    return object is Bank && object.id == id;
+  } // Bu custom operator girildikten sonra yukarda karşılaştırılıp false dönen değer bu fonksiyondan sonra doğru bir şekilde true döner
 }
