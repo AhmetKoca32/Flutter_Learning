@@ -50,7 +50,20 @@ void main(List<String> args) {
   // Benim bankama gelen müşterilerimin id si aynı olanları aynı müşteri say
   print(moneyBank1 == moneyBank2);
 
-  //Diğer bankadan bir modül aldıkbunu ekleyip müşterinin parasını sorgular mısın
+  //Diğer bankadan bir modül aldık bunu ekleyip müşterinin parasını sorgular mısın (mixin ile yapıldı)
+
+  //musteri adamın parasına 10 tl ekle ekrana döndür, adamin id sini 1 arttır sonra adını ahmet yap
+
+  moneyBank1.money += 10;
+  print(moneyBank1);
+
+  moneyBank1
+    ..money += 10
+    ..name = "Ahmet"
+    ..updateName(
+        "AhmetKoca"); // Bu yapinin adina cascade notation denir ve tek seferde birden fazla parametreyi değiştirmemizi sağlar
+
+  print(moneyBank1);
 }
 
 class _User {
@@ -74,13 +87,18 @@ class _User {
 }
 
 class Bank with BankMixin {
-  final int money;
+  int money;
   final String id;
+  String? name;
 
   Bank(this.money, this.id);
 
   int operator +(Bank newBank) {
     return this.money + newBank.money;
+  }
+
+  void updateName(String name) {
+    this.name = name;
   }
 
   @override
