@@ -44,12 +44,13 @@ void main(List<String> args) {
 
   // Bank classında operatör tanımlandıktan sonra
   print(moneyBank1 + moneyBank2); // Bu kod çalışır çünkü operatör tanımlandı
+  // özelleştirilmiş toString kullanımı
+  print(moneyBank1.toString());
 
   // Benim bankama gelen müşterilerimin id si aynı olanları aynı müşteri say
   print(moneyBank1 == moneyBank2);
 
-  // özelleştirilmiş toString kullanımı
-  print(moneyBank1.toString());
+  //Diğer bankadan bir modül aldıkbunu ekleyip müşterinin parasını sorgular mısın
 }
 
 class _User {
@@ -72,7 +73,7 @@ class _User {
   }
 }
 
-class Bank {
+class Bank with BankMixin {
   final int money;
   final String id;
 
@@ -90,4 +91,18 @@ class Bank {
   bool operator ==(Object object) {
     return object is Bank && object.id == id;
   } // Bu custom operator girildikten sonra yukarda karşılaştırılıp false dönen değer bu fonksiyondan sonra doğru bir şekilde true döner
+
+  @override
+  void sayBankHello() {
+    calculateMoney(money);
+  }
+}
+
+mixin BankMixin {
+  // mixinlerin classlardan farkı mixinler methodlar(drive(),park()) için kullanılır, classlar her türlü yapı için kullanılabilir stateler de dahil mixinlerde state(color,speed) kullanılmaz
+  void sayBankHello();
+
+  void calculateMoney(int money) {
+    print(money);
+  }
 }
