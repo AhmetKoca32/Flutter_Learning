@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 void main(List<String> args) {
   final newProduct = Product.money = 400;
 
@@ -7,6 +8,14 @@ void main(List<String> args) {
       10); // bu static fonksiyon yukarıdaki fonksiyon ile aynı işleve sahiptir
 
   // static fonksiyonlar çok yararlı olabileceği gibi dikkatli kullanılmazsa çok büyük sıkıntılara yol açabilir
+
+  // user classımı kullanarak product yapmak istiyorum
+  final user1 = User("ahmet", "aa");
+  final newProduct2 = Product(user1.product);
+  final newProduct3 =
+      Product.fromUser(user1); // yukarıdaki kod satırıyla aynı işlevi görür
+
+  Product.ahmet();
 }
 
 void productNameChange() {
@@ -25,6 +34,13 @@ void calculateMoney() {
 
 class Product {
   static int? money = 10;
+  String name;
+
+  Product(this.name);
+  Product.ahmet([this.name = 'ahmet']);
+  factory Product.fromUser(User user) {
+    return Product(user.name);
+  }
 
   static const companyName = "AhmetBank";
 
@@ -34,4 +50,11 @@ class Product {
           newMoney; // force lu bir şekilde ekleyebiliriz çünkü artık eminiz null dönemez
     }
   }
+}
+
+class User {
+  final String name;
+  final String product;
+
+  User(this.name, this.product);
 }
