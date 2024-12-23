@@ -63,7 +63,18 @@ void main(List<String> args) {
   final resultBmwMore20 = carItems.where((element) {
     return element.category == CarModels.BMW && element.money > 20;
   }).join();
+
+  print(resultBmwMore20);
+
+  final carNames = carItems.map((e) => e.name).join(',');
+  print(carNames);
+
+  final volvoCars =
+      carItems.singleWhere((element) => element.category == CarModels.Volvo);
+  print(volvoCars);
 }
+
+//  **     TASKS      **   ///
 
 // Bir arabalar sinifim olacak
 // arabalarin model,isim,parasi kesin olacak sehri olmayacak, ikinci el durumu eger musteri soylemezse her urun ikinci el kabul edilecek
@@ -72,9 +83,13 @@ void main(List<String> args) {
 
 // benim arabalarimin kaç tanesi ikinci el ? (where elementi ile sağlanir)
 
-// yeni bir araba geldi eğer aynısı varsa kontrol et (contains yapısı ile equality kullanmak da çoğunlukla gerekli)
+// yeni bir araba geldi eğer aynisi varsa kontrol et (contains yapisi ile equality kullanmak da çoğunlukla gerekli)
 
-// bana bmw olan ve moneysi 20den büyük olan arabaların isimlerini söyler misin ?
+// bana bmw olan ve moneysi 20den büyük olan arabalarin isimlerini söyler misin ? (join + where yapisi)
+
+// acaba sadece isimleri yan yana gösterir misin ?  (map yapisi)
+
+// benim elimde volvo var mi kontrol et  (singleWhere yapisi)
 
 class Cars {
   final CarModels category;
@@ -115,6 +130,13 @@ class Cars {
         isSecondHand.hashCode;
   }
   // **
+
+  // toString methodunu override ederek orijinal kullanımı saf dışı bırakarak class ımıza uygun hale getirdik
+  @override
+  String toString() {
+    // TODO: implement toString
+    return '$name - $money';
+  }
 }
 
-enum CarModels { BMW, Toyota, Mercedes, Audi }
+enum CarModels { BMW, Toyota, Mercedes, Audi, Volvo }
