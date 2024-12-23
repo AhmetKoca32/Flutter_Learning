@@ -30,6 +30,35 @@ void main(List<String> args) {
         isSecondHand: true,
         city: 'Isparta'),
   ];
+
+  final resultCount =
+      carItems.where((element) => element.isSecondHand == true).length;
+  print(resultCount); // kaç tane arabanın ikinci el olduğunun çıktısını verir.
+
+  final newCar = Cars(
+      category: CarModels.BMW,
+      name: 'BMW 320i',
+      money: 3000000,
+      city: 'İstanbul');
+  final newCar2 = Cars(
+      category: CarModels.BMW,
+      name: 'BMW 320i',
+      money: 3000000,
+      city: 'İstanbul');
+
+  final isHaveCar = carItems.contains(newCar);
+  final isHaveCar2 = carItems.contains(newCar2);
+
+  if (isHaveCar) {
+    print('patron elimizde var');
+  } else {
+    print('Elimizde yok alabiliriz');
+  }
+  if (isHaveCar2) {
+    print('patron elimizde var');
+  } else {
+    print('Elimizde yok alabiliriz');
+  }
 }
 
 // Bir arabalar sinifim olacak
@@ -37,7 +66,9 @@ void main(List<String> args) {
 
 // benim 5 tane arabam olucak (List yapisi ile sağlanir)
 
-// benim arabalarimin kaç tanesi ikinci el ?
+// benim arabalarimin kaç tanesi ikinci el ? (where elementi ile sağlanir)
+
+// yeni bir araba geldi eğer aynısı varsa kontrol et
 
 class Cars {
   final CarModels category;
