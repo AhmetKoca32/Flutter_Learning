@@ -44,7 +44,7 @@ void main(List<String> args) {
       category: CarModels.BMW,
       name: 'BMW 320i',
       money: 3000000,
-      city: 'İstanbul');
+      city: 'Ankara');
 
   final isHaveCar = carItems.contains(newCar);
   final isHaveCar2 = carItems.contains(newCar2);
@@ -84,6 +84,17 @@ void main(List<String> args) {
     print(
         'Abi bu işlem zor oldu bir daha sorma $isHaveCarVolvo'); // bu blok her türlü çalişir.
   }
+
+  final index = carItems.indexOf(newCar2);
+  print(index);
+
+  carItems.add(Cars(
+      category: CarModels.Audi,
+      name: 'RS6',
+      money: 13000000)); // yeni bir araba eklemek için kullanilir
+  carItems.sort((first, second) => second.money.compareTo(first.money));
+
+  print(carItems);
 }
 
 //  **     TASKS      **   ///
@@ -103,7 +114,7 @@ void main(List<String> args) {
 
 // benim elimde volvo var mi kontrol et  (singleWhere yapisi)
 
-// su yeni gelen arabaya var demiştin bunun kaçinci sirada söyler misin
+// su yeni gelen arabaya var demiştin bunun kaçinci sirada söyler misin (indexof)
 
 class Cars {
   final CarModels category;
