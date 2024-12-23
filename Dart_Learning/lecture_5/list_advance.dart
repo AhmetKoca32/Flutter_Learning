@@ -59,6 +59,10 @@ void main(List<String> args) {
   } else {
     print('Elimizde yok alabiliriz');
   }
+
+  final resultBmwMore20 = carItems.where((element) {
+    return element.category == CarModels.BMW && element.money > 20;
+  }).join();
 }
 
 // Bir arabalar sinifim olacak
@@ -68,7 +72,9 @@ void main(List<String> args) {
 
 // benim arabalarimin kaç tanesi ikinci el ? (where elementi ile sağlanir)
 
-// yeni bir araba geldi eğer aynısı varsa kontrol et
+// yeni bir araba geldi eğer aynısı varsa kontrol et (contains yapısı ile equality kullanmak da çoğunlukla gerekli)
+
+// bana bmw olan ve moneysi 20den büyük olan arabaların isimlerini söyler misin ?
 
 class Cars {
   final CarModels category;
@@ -83,6 +89,32 @@ class Cars {
     this.city,
     this.isSecondHand = true,
   });
+
+  // ilk başta equality methodunun eklemeden çalistirdik elimizde aynı arabadan olduğu halde olmadı gibi bir hata verdi sebebi ise
+  // her yeni değişken atandığında bu yeni bir referance tipi ile atanır ve hepsini farkli sayar ama equality metodu ile eklenirse
+  // yeni atanan referans tipindeki değişken aynı olursa ayırt edilebilir hale geldi.
+
+  // ** Equality **
+  @override
+  bool operator ==(covariant Cars other) {
+    if (identical(this, other)) return true;
+
+    return other.category == category &&
+        other.name == name &&
+        other.money == money &&
+        other.city == city &&
+        other.isSecondHand == isSecondHand;
+  }
+
+  @override
+  int get hashCode {
+    return category.hashCode ^
+        name.hashCode ^
+        money.hashCode ^
+        city.hashCode ^
+        isSecondHand.hashCode;
+  }
+  // **
 }
 
 enum CarModels { BMW, Toyota, Mercedes, Audi }
