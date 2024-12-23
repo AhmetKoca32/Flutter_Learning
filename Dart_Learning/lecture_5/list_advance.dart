@@ -69,9 +69,21 @@ void main(List<String> args) {
   final carNames = carItems.map((e) => e.name).join(',');
   print(carNames);
 
-  final volvoCars =
-      carItems.singleWhere((element) => element.category == CarModels.Volvo);
-  print(volvoCars);
+  // eğer bi değişkenin null gelme ihtimali varsa o kalip için try catch bloğu açilir
+
+  bool isHaveCarVolvo = false;
+  try {
+    final volvoCars =
+        carItems.singleWhere((element) => element.category == CarModels.Volvo);
+    print(volvoCars.name);
+    isHaveCarVolvo = true;
+  } catch (e) {
+    print('Araba yok');
+    isHaveCarVolvo = false;
+  } finally {
+    print(
+        'Abi bu işlem zor oldu bir daha sorma $isHaveCarVolvo'); // bu blok her türlü çalişir.
+  }
 }
 
 //  **     TASKS      **   ///
@@ -90,6 +102,8 @@ void main(List<String> args) {
 // acaba sadece isimleri yan yana gösterir misin ?  (map yapisi)
 
 // benim elimde volvo var mi kontrol et  (singleWhere yapisi)
+
+// su yeni gelen arabaya var demiştin bunun kaçinci sirada söyler misin
 
 class Cars {
   final CarModels category;
