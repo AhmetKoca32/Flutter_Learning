@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import '../lecture_4/class_extends.dart';
+
 void main(List<String> args) {
   final model = Cars(
       category: CarModels.BMW,
@@ -88,12 +90,19 @@ void main(List<String> args) {
   final index = carItems.indexOf(newCar2);
   print(index);
 
-  carItems.add(Cars(
-      category: CarModels.Audi,
-      name: 'RS6',
-      money: 13000000)); // yeni bir araba eklemek için kullanilir
-  carItems.sort((first, second) => second.money.compareTo(first.money));
+  final _Audi = Cars(category: CarModels.Audi, name: 'RS6', money: 13000000);
 
+  carItems.add(_Audi); // yeni bir araba eklemek için kullanilir
+  carItems.sort((first, second) => first.money.compareTo(second.money));
+
+  print(carItems);
+
+  final users = carItems.expand((element) => element.users).toList();
+
+  CalculateToUser(carItems);
+  carItems.remove(_Audi); // değişken olarak verdiğimiz ismi silmeye yarar
+  carItems.removeWhere(
+      (element) => element.category == CarModels.BMW || element.money < 30);
   print(carItems);
 }
 
@@ -116,19 +125,49 @@ void main(List<String> args) {
 
 // su yeni gelen arabaya var demiştin bunun kaçinci sirada söyler misin (indexof)
 
+// ben bütün arabalarimi user yapicam(expand)
+
+// yeni ekleneni sileim (removeLast)
+// bmw veya 30dan düşük olanlari da silelim(removeWhere)
+
+void CalculateToUser(List<Cars> items) {
+  //itemleri düzelt mercedes olanlari bmw
+
+  final _items = [...items.toList()];
+  final newItems = _items.map((Cars e) {
+    // if (e.category == CarModels.Mercedes) {
+    //   e.category = CarModels.BMW;
+    // }
+    // if (e.isSecondHand) {
+    //   e.isSecondHand = false;
+    // }                             // e ye dokunursak eğer referans model bazı sorunlar çıkarabiliyor o yüzden aşağıdaki kullanım daha garanti bir kullanımdır
+
+    return Cars(
+        category: e.category == CarModels.Mercedes
+            ? e.category = CarModels.BMW
+            : e.category,
+        name: e.name,
+        money: e.money,
+        isSecondHand: false);
+  }).toList();
+
+  print(newItems);
+}
+
 class Cars {
-  final CarModels category;
+  CarModels category;
   final String name;
   final double money;
+  List<User> users;
   String? city;
   bool isSecondHand;
-  Cars({
-    required this.category,
-    required this.name,
-    required this.money,
-    this.city,
-    this.isSecondHand = true,
-  });
+  Cars(
+      {required this.category,
+      required this.name,
+      required this.money,
+      this.city,
+      this.isSecondHand = true,
+      this.users = const []});
 
   // ilk başta equality methodunun eklemeden çalistirdik elimizde aynı arabadan olduğu halde olmadı gibi bir hata verdi sebebi ise
   // her yeni değişken atandığında bu yeni bir referance tipi ile atanır ve hepsini farkli sayar ama equality metodu ile eklenirse
